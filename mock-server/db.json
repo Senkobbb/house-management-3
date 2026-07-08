@@ -1,0 +1,146 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "username": "admin",
+      "password": "admin123",
+      "displayName": "Quản trị viên"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "r1",
+      "name": "P.101",
+      "floor": 1,
+      "price": 2500000,
+      "status": "occupied",
+      "maxTenants": 2
+    },
+    {
+      "id": "r2",
+      "name": "P.102",
+      "floor": 1,
+      "price": 2500000,
+      "status": "vacant",
+      "maxTenants": 2
+    },
+    {
+      "id": "r3",
+      "name": "P.201",
+      "floor": 2,
+      "price": 3000000,
+      "status": "occupied",
+      "maxTenants": 3
+    },
+    {
+      "id": "r4",
+      "name": "P.202",
+      "floor": 2,
+      "price": 3000000,
+      "status": "vacant",
+      "maxTenants": 3
+    },
+    {
+      "id": "r5",
+      "name": "P.301",
+      "floor": 3,
+      "price": 3500000,
+      "status": "occupied",
+      "maxTenants": 4
+    }
+  ],
+  "tenants": [
+    {
+      "id": "t1",
+      "name": "Nguyễn Văn An",
+      "phone": "0912345678",
+      "email": "an.nguyen@example.com",
+      "idCardNumber": "012345678901",
+      "roomId": "r1",
+      "moveInDate": "2025-01-15T00:00:00.000Z",
+      "moveOutDate": null
+    },
+    {
+      "id": "t2",
+      "name": "Trần Thị Bình",
+      "phone": "0987654321",
+      "email": "binh.tran@example.com",
+      "idCardNumber": "023456789012",
+      "roomId": "r3",
+      "moveInDate": "2025-03-01T00:00:00.000Z",
+      "moveOutDate": null
+    },
+    {
+      "id": "t3",
+      "name": "Lê Hoàng Cường",
+      "phone": "0905123456",
+      "email": "cuong.le@example.com",
+      "idCardNumber": "034567890123",
+      "roomId": "r5",
+      "moveInDate": "2025-06-10T00:00:00.000Z",
+      "moveOutDate": null
+    }
+  ],
+  "contracts": [
+    {
+      "id": "c1",
+      "tenantId": "t1",
+      "roomId": "r1",
+      "deposit": 2500000,
+      "startDate": "2025-01-15T00:00:00.000Z",
+      "endDate": "2026-01-15T00:00:00.000Z",
+      "status": "active"
+    },
+    {
+      "id": "c2",
+      "tenantId": "t2",
+      "roomId": "r3",
+      "deposit": 3000000,
+      "startDate": "2025-03-01T00:00:00.000Z",
+      "endDate": "2026-03-01T00:00:00.000Z",
+      "status": "active"
+    }
+  ],
+  "bills": [
+    {
+      "roomId": "r1",
+      "month": 7,
+      "year": 2026,
+      "rentAmount": 2500000,
+      "electricUsage": 120,
+      "electricUnitPrice": 3500,
+      "waterUsage": 8,
+      "waterUnitPrice": 15000,
+      "serviceFee": 100000,
+      "paymentStatus": "unpaid",
+      "id": "b1"
+    },
+    {
+      "roomId": "r3",
+      "month": 7,
+      "year": 2026,
+      "rentAmount": 3000000,
+      "electricUsage": 90,
+      "electricUnitPrice": 3500,
+      "waterUsage": 6,
+      "waterUnitPrice": 15000,
+      "serviceFee": 100000,
+      "paymentStatus": "paid",
+      "id": "b2"
+    },
+    {
+      "id": "b3",
+      "roomId": "r5",
+      "month": 7,
+      "year": 2026,
+      "rentAmount": 3500000,
+      "electricUsage": 150,
+      "electricUnitPrice": 3500,
+      "waterUsage": 10,
+      "waterUnitPrice": 15000,
+      "serviceFee": 150000,
+      "paymentStatus": "paid",
+      "createdAt": "2026-07-01T00:00:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+<h1 class="text-2xl font-medium mb-4">Bảng điều khiển</h1>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+@if (stats(); as data) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <mat-card class="p-4">
+      <div class="flex items-center gap-3">
+        <mat-icon class="text-indigo-600 !w-10 !h-10 !text-4xl">meeting_room</mat-icon>
+        <div>
+          <div class="text-sm text-gray-500">Tổng số phòng</div>
+          <div class="text-2xl font-semibold">{{ data.totalRooms }}</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-4">
+      <div class="flex items-center gap-3">
+        <mat-icon class="text-green-600 !w-10 !h-10 !text-4xl">check_circle</mat-icon>
+        <div>
+          <div class="text-sm text-gray-500">Phòng trống</div>
+          <div class="text-2xl font-semibold">{{ data.vacantRooms }}</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-4">
+      <div class="flex items-center gap-3">
+        <mat-icon class="text-orange-600 !w-10 !h-10 !text-4xl">people</mat-icon>
+        <div>
+          <div class="text-sm text-gray-500">Phòng đã thuê</div>
+          <div class="text-2xl font-semibold">{{ data.occupiedRooms }}</div>
+          <div class="text-xs text-gray-400">Tỷ lệ lấp đầy: {{ occupancyRate() }}%</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="p-4">
+      <div class="flex items-center gap-3">
+        <mat-icon class="text-purple-600 !w-10 !h-10 !text-4xl">payments</mat-icon>
+        <div>
+          <div class="text-sm text-gray-500">Doanh thu tháng này</div>
+          <div class="text-2xl font-semibold">
+            {{ data.monthlyRevenue | currency: 'VND' : 'symbol' : '1.0-0' }}
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+}

@@ -1,0 +1,69 @@
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-medium">Thanh toán & Hóa đơn</h1>
+  <button mat-flat-button color="primary" (click)="openCreateDialog()">
+    <mat-icon>receipt_long</mat-icon>
+    Tạo hóa đơn
+  </button>
+</div>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<div class="overflow-x-auto rounded-lg shadow bg-white">
+  <table mat-table [dataSource]="bills()" class="w-full">
+    <ng-container matColumnDef="room">
+      <th mat-header-cell *matHeaderCellDef>Phòng</th>
+      <td mat-cell *matCellDef="let bill">{{ roomName(bill.roomId) }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="period">
+      <th mat-header-cell *matHeaderCellDef>Kỳ</th>
+      <td mat-cell *matCellDef="let bill">{{ bill.month }}/{{ bill.year }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Tổng tiền</th>
+      <td mat-cell *matCellDef="let bill">{{ total(bill) | currency: 'VND' : 'symbol' : '1.0-0' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentStatus">
+      <th mat-header-cell *matHeaderCellDef>Thanh toán</th>
+      <td mat-cell *matCellDef="let bill">
+        <mat-chip [class]="bill.paymentStatus === 'paid' ? 'bg-green-100' : 'bg-red-100'">
+          {{ bill.paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chưa thanh toán' }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="text-right">Thao tác</th>
+      <td mat-cell *matCellDef="let bill" class="text-right">
+        @if (bill.paymentStatus === 'unpaid') {
+          <button
+            mat-icon-button
+            color="primary"
+            matTooltip="Đánh dấu đã thanh toán"
+            (click)="markAsPaid(bill)"
+            aria-label="Đã thanh toán"
+          >
+            <mat-icon>paid</mat-icon>
+          </button>
+        }
+        <button mat-icon-button color="primary" (click)="openEditDialog(bill)" aria-label="Sửa">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="confirmDelete(bill)" aria-label="Xóa">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  @if (!loading() && bills().length === 0) {
+    <div class="p-8 text-center text-gray-500">Chưa có hóa đơn nào.</div>
+  }
+</div>
