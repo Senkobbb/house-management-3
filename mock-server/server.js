@@ -63,8 +63,8 @@ server.post('/api/bills', (req, res, next) => {
 // Mount all json-server CRUD routes under /api
 server.use('/api', router);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`\n  Mock API server running at http://localhost:${PORT}/api`);
+  console.log(`\n  Mock API server running on port ${PORT} (path /api)`);
   console.log('  Login: username "admin", password "admin123"\n');
 });
