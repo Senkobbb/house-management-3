@@ -1,0 +1,15 @@
+{
+  "name": "house-management-3-mock-api",
+  "version": "1.0.0",
+  "description": "Mock REST backend (json-server) for the House Management app.",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
