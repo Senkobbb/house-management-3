@@ -1,0 +1,45 @@
+<mat-sidenav-container class="h-screen">
+  <mat-sidenav #sidenav mode="side" opened class="w-64 border-r" [fixedInViewport]="false">
+    <div class="p-4 flex items-center gap-2 text-indigo-700">
+      <mat-icon>apartment</mat-icon>
+      <span class="font-semibold">Nhà trọ</span>
+    </div>
+    <mat-nav-list>
+      @for (item of navItems; track item.path) {
+        <a
+          mat-list-item
+          [routerLink]="item.path"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [activated]="rla.isActive"
+        >
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="bg-gray-50">
+    <mat-toolbar color="primary" class="flex justify-between sticky top-0 z-10">
+      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="flex-1"></span>
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+        <span class="ml-1">{{ user()?.displayName ?? 'Tài khoản' }}</span>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Đăng xuất</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <main class="p-4 md:p-6">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

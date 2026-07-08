@@ -1,0 +1,52 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 p-4">
+  <mat-card class="w-full max-w-sm p-6">
+    @if (loading()) {
+      <mat-progress-bar mode="indeterminate" class="mb-4" />
+    }
+
+    <div class="text-center mb-6">
+      <mat-icon class="!w-12 !h-12 !text-5xl text-indigo-600">apartment</mat-icon>
+      <h1 class="text-xl font-semibold mt-2">Quản lý Nhà trọ</h1>
+      <p class="text-sm text-gray-500">Đăng nhập để tiếp tục</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col">
+      <mat-form-field appearance="outline">
+        <mat-label>Tên đăng nhập</mat-label>
+        <input matInput formControlName="username" autocomplete="username" required />
+        <mat-icon matPrefix>person</mat-icon>
+        @if (form.controls.username.hasError('required')) {
+          <mat-error>Vui lòng nhập tên đăng nhập</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mật khẩu</mat-label>
+        <input
+          matInput
+          [type]="hidePassword() ? 'password' : 'text'"
+          formControlName="password"
+          autocomplete="current-password"
+          required
+        />
+        <mat-icon matPrefix>lock</mat-icon>
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePassword()"
+          [attr.aria-label]="hidePassword() ? 'Hiện mật khẩu' : 'Ẩn mật khẩu'"
+        >
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (form.controls.password.hasError('required')) {
+          <mat-error>Vui lòng nhập mật khẩu</mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit" class="!mt-2" [disabled]="loading()">
+        Đăng nhập
+      </button>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,63 @@
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-medium">Quản lý phòng</h1>
+  <button mat-flat-button color="primary" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+    Thêm phòng
+  </button>
+</div>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<div class="overflow-x-auto rounded-lg shadow bg-white">
+  <table mat-table [dataSource]="rooms()" class="w-full">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Tên phòng</th>
+      <td mat-cell *matCellDef="let room">{{ room.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="floor">
+      <th mat-header-cell *matHeaderCellDef>Tầng</th>
+      <td mat-cell *matCellDef="let room">{{ room.floor }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Giá thuê</th>
+      <td mat-cell *matCellDef="let room">{{ room.price | currency: 'VND' : 'symbol' : '1.0-0' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="maxTenants">
+      <th mat-header-cell *matHeaderCellDef>Số người tối đa</th>
+      <td mat-cell *matCellDef="let room">{{ room.maxTenants }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+      <td mat-cell *matCellDef="let room">
+        <mat-chip [class]="room.status === 'vacant' ? 'bg-green-100' : 'bg-orange-100'">
+          {{ room.status === 'vacant' ? 'Trống' : 'Đã thuê' }}
+        </mat-chip>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="text-right">Thao tác</th>
+      <td mat-cell *matCellDef="let room" class="text-right">
+        <button mat-icon-button color="primary" (click)="openEditDialog(room)" aria-label="Sửa">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="confirmDelete(room)" aria-label="Xóa">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  @if (!loading() && rooms().length === 0) {
+    <div class="p-8 text-center text-gray-500">Chưa có phòng nào. Hãy thêm phòng mới.</div>
+  }
+</div>

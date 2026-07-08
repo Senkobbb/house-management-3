@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Cập nhật khách thuê' : 'Thêm khách thuê' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="flex flex-col gap-1 min-w-[360px]">
+    <mat-form-field appearance="outline">
+      <mat-label>Họ tên</mat-label>
+      <input matInput formControlName="name" required />
+      @if (form.controls.name.hasError('required')) {
+        <mat-error>Họ tên là bắt buộc</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Số điện thoại</mat-label>
+      <input matInput formControlName="phone" required />
+      @if (form.controls.phone.hasError('required')) {
+        <mat-error>Số điện thoại là bắt buộc</mat-error>
+      }
+      @if (form.controls.phone.hasError('invalidPhone')) {
+        <mat-error>Số điện thoại không hợp lệ</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required />
+      @if (form.controls.email.hasError('email')) {
+        <mat-error>Email không hợp lệ</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Số CCCD/CMND</mat-label>
+      <input matInput formControlName="idCardNumber" required />
+      @if (form.controls.idCardNumber.hasError('pattern')) {
+        <mat-error>CCCD/CMND phải gồm 9 hoặc 12 chữ số</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phòng</mat-label>
+      <mat-select formControlName="roomId">
+        <mat-option [value]="null">Chưa xếp phòng</mat-option>
+        @for (room of data.rooms; track room.id) {
+          <mat-option [value]="room.id">{{ room.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ngày vào ở</mat-label>
+      <input matInput [matDatepicker]="moveIn" formControlName="moveInDate" required />
+      <mat-datepicker-toggle matIconSuffix [for]="moveIn" />
+      <mat-datepicker #moveIn />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ngày rời đi</mat-label>
+      <input matInput [matDatepicker]="moveOut" formControlName="moveOutDate" />
+      <mat-datepicker-toggle matIconSuffix [for]="moveOut" />
+      <mat-datepicker #moveOut />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()">Hủy</button>
+    <button mat-flat-button color="primary" type="submit">Lưu</button>
+  </mat-dialog-actions>
+</form>

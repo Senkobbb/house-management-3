@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Cập nhật hóa đơn' : 'Tạo hóa đơn tháng' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="min-w-[420px]">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Phòng</mat-label>
+      <mat-select formControlName="roomId" required>
+        @for (room of data.rooms; track room.id) {
+          <mat-option [value]="room.id">{{ room.name }}</mat-option>
+        }
+      </mat-select>
+      @if (form.controls.roomId.hasError('required')) {
+        <mat-error>Vui lòng chọn phòng</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="grid grid-cols-2 gap-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Tháng</mat-label>
+        <input matInput type="number" formControlName="month" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Năm</mat-label>
+        <input matInput type="number" formControlName="year" required />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Tiền phòng (VNĐ)</mat-label>
+      <input matInput type="number" formControlName="rentAmount" required />
+    </mat-form-field>
+
+    <div class="grid grid-cols-2 gap-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Số điện (kWh)</mat-label>
+        <input matInput type="number" formControlName="electricUsage" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Đơn giá điện</mat-label>
+        <input matInput type="number" formControlName="electricUnitPrice" required />
+      </mat-form-field>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Số nước (m³)</mat-label>
+        <input matInput type="number" formControlName="waterUsage" required />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Đơn giá nước</mat-label>
+        <input matInput type="number" formControlName="waterUnitPrice" required />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Phí dịch vụ (VNĐ)</mat-label>
+      <input matInput type="number" formControlName="serviceFee" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Trạng thái thanh toán</mat-label>
+      <mat-select formControlName="paymentStatus" required>
+        <mat-option value="unpaid">Chưa thanh toán</mat-option>
+        <mat-option value="paid">Đã thanh toán</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="flex items-center justify-between p-3 rounded bg-indigo-50 mt-2">
+      <span class="font-medium">Tổng cộng</span>
+      <span class="text-xl font-semibold text-indigo-700">
+        {{ total() | currency: 'VND' : 'symbol' : '1.0-0' }}
+      </span>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()">Hủy</button>
+    <button mat-flat-button color="primary" type="submit">Lưu</button>
+  </mat-dialog-actions>
+</form>
